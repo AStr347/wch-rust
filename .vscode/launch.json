@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "gdb-openocd",
+            "type": "gdb",
+            "request": "attach",
+            "remote": true,
+            "target": ":3333",
+
+            "cwd": "${workspaceRoot}",
+            "executable": "target/riscv32imac-unknown-none-elf/debug/${config:projname}",
+            "preLaunchTask": "run_openocd",
+            "postDebugTask": "kill_openocd",
+
+            "gdbpath": "riscv64-unknown-elf-gdb", /* "riscv-none-embed-gdb", */
+            "registers": [
+                "ra", "sp", "gp", "tp", "pc", "fp",
+                "t0", "t1", "t2", "t3", "t4", "t5", "t6",
+                "s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11",
+                "a0", "a1", "a2", "a3", "a4", "a5", "a6", "a7",
+                "mstatus", "mscratch", "mcause", "mepc", "mintstatus",
+            ],
+            "autorun": [
+                "set mem inaccessible-by-default off",
+                "set architecture riscv:rv32",
+                "set remotetimeout unlimited",
+                "monitor reset halt",
+                "load"
+            ]
+        },
+    ]
+}

@@ -1,0 +1,16 @@
+[target.riscv32imac-unknown-none-elf]
+# Mount River toolchain
+# linker = 'riscv-none-embed-ld'
+# runner = 'riscv-none-embed-gdb -x board/openocd.gdb'
+
+# Riscv64 toolchain
+# linker = 'riscv64-unknown-elf-ld'
+runner = 'riscv64-unknown-elf-gdb -x board/openocd.gdb'
+rustflags = [
+  "-C", "link-arg=-Tboard/memory.x",
+  "-C", "link-arg=-Tdevice.x",
+  "-C", "link-arg=-Tlink.x",
+]
+
+[build]
+target = "riscv32imac-unknown-none-elf"

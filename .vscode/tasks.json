@@ -1,0 +1,107 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run_openocd",
+            "type": "process",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent",
+                "clear": true,
+                "close": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "${config:openocddir}/openocd.exe",
+            "args": [
+                "-f",
+                "board/wch-riscv.cfg"
+            ]
+        },
+        {
+            "label": "kill_openocd",
+            "type": "shell",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent",
+                "clear": true,
+                "close": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "taskkill",
+            "args": [
+                "/F",
+                "/IM",
+                "openocd.exe"
+            ]
+        },
+        {
+            "label": "Flash",
+            "type": "shell",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent",
+                "clear": true,
+                "close": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "${config:openocddir}/openocd.exe",
+            "args": [
+                "-f",
+                "board/wch-riscv.cfg",
+                "-c \"program output/${config:projname}.hex\"",
+                "-c exit"
+            ]
+        },
+        {
+            "label": "objdump",
+            "type": "shell",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent",
+                "clear": true,
+                "close": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cargo",
+            "args": [
+                "objdump",
+                "--release",
+                "--",
+                "--source",
+                "--all-headers",
+                "--line-numbers",
+                "--no-show-raw-insn",
+                "\"> output/${config:projname}.lst\""
+            ]
+        },
+        {
+            "label": "objcopy",
+            "type": "shell",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent",
+                "clear": true,
+                "close": true
+            },
+            "command": "cargo",
+            "args": [
+                "objcopy",
+                "--release",
+                "--",
+                "-O",
+                "ihex",
+                "output/${config:projname}.hex"
+            ]
+        }
+    ]
+}
