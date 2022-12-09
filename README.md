@@ -4,7 +4,6 @@
 
 * Cargo 1.65.0 (4bc8f24d3 2022-10-20)
 * MounRiver Studio Community toolchain
-  * RISC-V Embedded GCC (riscv gcc 8.2.0)
   * OpenOCD
 * VSCode Extensions
   * rust-analyzer - v0.3.1309
@@ -23,7 +22,7 @@ For flashing and debuging set self paths into '.vscode/settings.json' like this:
 
 ## Build
 
-Add to your Rust riscv64 targets support
+Add to your Rust riscv32 targets support
 
 ```console
 rustup target add riscv32imac-unknown-none-elf
